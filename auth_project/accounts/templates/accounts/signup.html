@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        /* THEME VARIABLES */
+        :root {
+            --bg: #f3f4f6;
+            --navbar-bg: #1f2937;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --input-border: #d1d5db;
+            --input-focus: #2563eb;
+            --button-bg: #16a34a;
+            --button-hover: #15803d;
+            --link: #2563eb;
+            --nav-btn: #3982f7;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --navbar-bg: #020617;
+            --card-bg: #020617;
+            --text-primary: #e5e7eb;
+            --text-secondary: #94a3b8;
+            --input-border: #475569;
+            --input-focus: #3b82f6;
+            --button-bg: #22c55e;
+            --button-hover: #16a34a;
+            --link: #60a5fa;
+            --nav-btn: #2563eb;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--navbar-bg);
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .logo {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid #64748b;
+            color: #e5e7eb;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: var(--nav-btn);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .navbar a:hover {
+            opacity: 0.9;
+        }
+
+        /* Page Center */
+        .page-wrapper {
+            min-height: calc(100vh - 64px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Signup Card */
+        .signup-card {
+            background: var(--card-bg);
+            width: 380px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .signup-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+        }
+
+        .errorlist {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 5px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--button-bg);
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: var(--button-hover);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .footer-text a {
+            color: var(--link);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="/" class="logo">MyDjangoApp</a>
+    <div class="nav-right">
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="page-wrapper">
+    <div class="signup-card">
+        <h2>Create Account</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <p>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </p>
+
+            <p>
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </p>
+
+            <p>
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </p>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="footer-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme) {
+        root.setAttribute("data-theme", savedTheme);
+    }
+
+    function toggleTheme() {
+        const current = root.getAttribute("data-theme");
+        const newTheme = current === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+    }
+</script>
+
+</body>
+</html>
