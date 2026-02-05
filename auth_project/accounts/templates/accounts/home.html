@@ -195,7 +195,7 @@
 
 <!-- NAVBAR -->
 <div class="navbar">
-    <a href="/" class="logo">MyDjangoApp</a>
+    <a href="{% url 'home' %}" class="logo">MyDjangoApp</a>
     <div class="nav-right">
         <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
         <span class="username">{{ request.user.username }}</span>
